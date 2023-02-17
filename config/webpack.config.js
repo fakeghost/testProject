@@ -7,8 +7,8 @@ const resolve = require('resolve');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 插件生成一个html5文件，body中引入所有的生成的bundle
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin'); // 
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin'); // webpack打包runtime内联至html文件用的，和babel配合使用，使js支持es6语法
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin'); // 压缩code插件
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');  // 压缩 
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
@@ -257,6 +257,8 @@ module.exports = function (webpackEnv) {
               // into invalid ecma 5 code. This is why the 'compress' and 'output'
               // sections only apply transformations that are ecma 5 safe
               // https://github.com/facebook/create-react-app/pull/4234
+
+              // 描述为什么出口处和压缩使用es5，因为如果转成其他es5以上可能会导致部分代码失效，使用es5安全
               ecma: 8,
             },
             compress: {
@@ -266,7 +268,7 @@ module.exports = function (webpackEnv) {
               // https://github.com/facebook/create-react-app/issues/2376
               // Pending further investigation:
               // https://github.com/mishoo/UglifyJS2/issues/2011
-              comparisons: false,
+              comparisons: false, // 二进制节点优化选项
               // Disabled because of an issue with Terser breaking valid code:
               // https://github.com/facebook/create-react-app/issues/5250
               // Pending further investigation:
@@ -284,7 +286,8 @@ module.exports = function (webpackEnv) {
               comments: false,
               // Turned on because emoji and regex is not minified properly using default
               // https://github.com/facebook/create-react-app/issues/2488
-              ascii_only: true,
+
+              ascii_only: true, // 转义字符串中和正则表达式中的unicode字符
             },
           },
         }),
