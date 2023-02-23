@@ -342,6 +342,41 @@ module.exports = function (webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+      //   {
+      //     test: /\.js$/,
+      //     use: [
+      //         {
+      //             loader: require.resolve('./loader/testLoader1.js'),
+      //         },
+      //     ]
+      // },
+      // {
+      //     test: /\.js$/,
+      //     enforce: 'post',
+      //     use: [
+      //         {
+      //             loader: require.resolve('./loader/testLoader2.js'),
+      //         }
+      //     ]
+      // },
+      // {
+      //   test: /\.js$/,
+      //   enforce: 'post',
+      //   use: [
+      //       {
+      //           loader: require.resolve('./loader/testLoader4.js'),
+      //       }
+      //   ]
+      // },
+      // {
+      //     test: /\.js$/,
+      //     enforce: 'pre',
+      //     use: [
+      //         {
+      //             loader: require.resolve('./loader/testLoader3.js'),
+      //         }
+      //     ]
+      // }
         // Handle node_modules packages that contain sourcemaps
         shouldUseSourceMap && {
           enforce: 'pre',
