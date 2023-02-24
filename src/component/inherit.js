@@ -32,10 +32,14 @@ export function inherit(children, parent) {
 
 export const parent = () => {
     const parent = this;
+
+    return parent
 }
 
-const newFn = (fn) => {
+export const newFn = (fn) => {
     let obj = {
         __proto__: fn.protoType
     }
+
+    return obj
 }
