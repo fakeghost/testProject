@@ -22,6 +22,40 @@ const VideoPlayer = () => {
           {/* 测试下LVHA问题 */}
           <a className='testHover' href='https://www.baidu.com'>哈哈哈哈</a>
         </header>
+
+        {/* 三角形 */}
+        <div className='triangle'></div>
+
+        {/* 品字布局 */}
+        <div className='layoutP'>
+          <div className='box1'></div>
+          <div className='boxContainer'>
+            <div className='box2'></div>
+            <div className='box3'></div>
+          </div>
+        </div>
+
+        {/* 多列等高 */}
+        <div className='divTree'>
+          <div className='box1'>
+            <p>大师的撒多撒大所大所多</p>
+          </div>
+          <div className='box2'>
+            <p>大师的撒多撒大所大所多大师的撒多撒大所大所多</p> 
+          </div>
+          <div className='box3'>
+            <p>大师的撒多撒大所大所多大师的撒多撒大所大所多大师的撒多撒大所大所多大师的撒多撒大所大所多大师的撒多撒大所大所多</p>
+          </div>
+        </div>
+
+        {/* margin重叠问题 */}
+        <div className='marginProblem'>
+          <div className='margin1'></div>
+          <div className='margin2'></div>
+        </div>
+
+        {/* 宽高2: 1的矩形 */}
+        <div className='rec'></div>
         
         {/* 三列式上下固定高度，中间高度自适应布局 */}
         <div className='testBox1'>

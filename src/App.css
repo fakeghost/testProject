@@ -99,6 +99,81 @@
   width: 100%;
 }
 
+.triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 100px;
+  border-color: transparent red transparent  transparent ;
+}
+
+.layoutP {
+  width: 100px;
+  height: 100px;
+  background: green;
+}
+
+.layoutP .box1 {
+  width: 50%;
+  background: black;
+  height: 50%;
+  margin: 0 auto;
+}
+
+.boxContainer {
+  display: flex;
+  height: 50%;
+}
+
+.boxContainer div {
+  flex: 1;
+  background: red;
+}
+
+.divTree {
+  overflow: hidden;
+  /* width: 100px;
+  display: flex; */
+}
+
+.divTree div {
+  width: 100px;
+  float: left;
+  padding-bottom: 9999px;
+  margin-bottom: -9999px;
+}
+
+.marginProblem {
+  width: 100px;
+  background: blue;
+  /* margin-top: 100px; */
+}
+
+
+.marginProblem .margin1 {
+  width: 20px;
+  background: red;
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  /* height: 100%; */
+  margin-right: 10px;
+}
+
+.marginProblem .margin2 {
+  width: 0px;
+  background: green;
+  margin-top: 10px;
+  /* height: 100%; */
+  height: 0px;
+}
+
+.rec {
+  padding-top: 20%;
+  width: 10%;
+  background: black;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
