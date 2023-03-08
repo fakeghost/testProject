@@ -154,5 +154,68 @@ let rain = (array) => {
     return result
 }
 
+// 滑动窗口算法
+const minWindow = function(s, t) {
+    let leftIndex = 0
+    let rightIndex = 0
+
+    let m = new Map()
+
+    let resultStr = ''
+
+    for(let i = 0; i < t.length; i++) {
+        let c = t[i]
+        m.set(c, m.get(c) ? m.get(c) + 1: 1)
+    }
+
+    let type = m.size
+
+    // 当窗口内不包含字符时，rightIndex右移动，当窗口内字符包含全量字符时，leftIndex右移动
+    while(rightIndex < s.length) {
+        let c = s[rightIndex]
+
+        // 严重错误思维，在写代码时完全忽略要记得，必须窗口内要有这个字符，才会set, map.has()这个方法完全忘记了
+        // m.set(c, m.get(c) - 1)
+
+        if(m.has(c)) {
+            m.set(c, m.get(c) - 1)
+
+            if(m.get(c) === 0) {
+                type--
+            }
+        }
+        
+        // 
+        while(type === 0) {
+            let c2 = s[leftIndex]
+    
+            // 错误思维，比的应该是旧resultStr和新resultStr
+            // if(resultStr && resultStr.length > 0) {
+            //     resultStr = s.slice(leftIndex, rightIndex - 1)
+            // }
+
+            const newRes = s.slice(leftIndex, rightIndex + 1)
+
+            // 记住这个判断
+            if(!resultStr || resultStr.length > newRes.length) {
+                resultStr = newRes
+            }
+
+            if(m.has(c2)) {
+                m.set(c2, m.get(c2) + 1)
+                if(m.get(c2) === 1) {
+                    type++
+                }
+            }
+
+            leftIndex++
+        }
+        
+        rightIndex++
+    }
+
+    return resultStr  
+};
+
 
 export default lcs;
