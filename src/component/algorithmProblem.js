@@ -217,5 +217,10 @@ const minWindow = function(s, t) {
     return resultStr  
 };
 
+// 细胞分裂问题
+const cellDivid = () => {
+   
+}
+
 
 export default lcs;

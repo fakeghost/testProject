@@ -80,6 +80,71 @@ const throtte = (fn, time) => {
     }
 }
 
+// 字符串大小写反转
+const reverseWord = (string) => {
+    const array = string.split('')
+
+    const newArray = array.map(item => {
+        if(item.toLowerCase() === item) {
+            return item.toUpperCase()
+        } else {
+            return item.toLowerCase()
+        }
+    })
+
+    return newArray.join('')
+}
+
+// call函数实现
+Function.prototype.call2 = function(context) {
+    // 严重错误思维，想改变this指向, 往传入的context添加一个fn属性就行了
+    // this[this] = context
+
+    let result = ''
+    context.fn = this || window
+    let arg = []
+    // 严重错误思维, 想执行用eval
+    // this(args)
+
+    // 错误了，写call函数还用call?
+
+    for(let i = 1; i < arguments.length; i++) {
+        arg.push(arguments[i])
+    }
+    result = eval(`context.fn(${arg})`)
+
+    delete context.fn
+
+    return result
+}
+
+const deepClone = (sourceTarget) => {
+    let obj = {}
+    if(typeof sourceTarget !== 'object') {
+        return sourceTarget
+    }
+
+    if(Array.isArray(sourceTarget)) {
+        return sourceTarget
+    }
+
+    for(let key in sourceTarget) {
+        let value = sourceTarget[key]
+        if(Object.prototype.hasOwnProperty.call(sourceTarget, key)) {
+            if(typeof value === 'object') {
+                obj[key] = deepClone(value)
+            } else {
+                obj[key] = value
+            }
+        }
+    }
+
+    return obj
+}
+
 export {
-    _flatten
+    _flatten,
+    debounce,
+    throtte,
+    reverseWord
 }
