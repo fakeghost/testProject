@@ -218,8 +218,32 @@ const minWindow = function(s, t) {
 };
 
 // 细胞分裂问题
-const cellDivid = () => {
-   
+// 总细胞数 = 2 * f(n - 1) - f(n - 4) 注意 这里一定是n-4不是n-3，因为3周期的细胞第四个周期才死掉
+const cellDivid = (n) => {
+   if(n === 0) {
+        return 1
+   }
+
+   if(n === 1) {
+    return 2
+   }
+
+   if(n === 2) {
+    return 4
+   }
+
+   // 错误思维，n - 3里有1个死细胞
+//    if(n >= 3) {
+//     return 2 * cellDivid(n - 1) - cellDivid(n - 3)
+//    }
+
+   if(n === 3) {
+    return 7
+   }
+
+   if(n >= 4) {
+    return 2 * cellDivid(n - 1) - cellDivid(n - 4)
+   }
 }
 
 
