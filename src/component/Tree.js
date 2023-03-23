@@ -6,5 +6,4 @@ const treeNode = {
     rightNode: {
         value: '3'
     }
-
 }

@@ -1,3 +1,70 @@
+// 基础技巧
+// 去重
+Array.from(new Set([]))
+
+// 计算 解决进制计算问题
+eval()
+
+// 判断是否为质数
+const isPrime = (number) => {
+    let flag = true
+    for(let i = 2; i < number; i++) {
+        if(number % i) {
+            flag = false
+        }
+    }
+
+    return flag
+}
+
+// 计算质因数递归写法，但是时间速度太慢，超1s
+const calYin = (number) => {
+    if(number === 1) {
+        return;
+    }
+
+    let cal = 2
+
+    for(let i = 2; i <= number; i++) {
+        if(number % i === 0 && isPrime(i)) {
+            result.push(i)
+            cal = i
+            break;
+        }
+    }
+    calYin(number / cal)
+}
+
+// 优化后的代码
+// 问题1，为何使用平方
+// 问题2，为何循环不是2的时候+2，是2的时候+1
+// 问题3，为何结束条件是i*i
+const calYinGood = (num) => {
+    let arr = [];
+    while (num != 1) {
+        for (var i = 2; i * i <= num; ) {
+            if (num % i == 0) {
+                arr.push(i);
+                num = num / i;
+                break;
+            }
+            if (i != 2) {
+                i += 2;
+            } else {
+                i++;
+            }
+        }
+
+        // 结束条件 当i的平方>num的时候
+        if (i * i > num) {
+            arr.push(num);
+            num = 1;
+        }
+    }
+
+    console.log(arr.join(" "));
+}
+
 // 最长子序列问题
 // 我个人的理解，设立一个矩阵，如果横竖不相等的话，就取左边和上边2个比较的最大值，如果相同就取斜对角（递归
 
@@ -18,7 +85,6 @@ let lcs = (str1, str2) => {
         for(let j = 0; j < col.length; j++) {
             if(i === 0 || j === 0) {
                 result[i][j] = 0
-                
             } else {
                 if(row[i] === col[j]) {
                     result[i][j] = result[i-1][j-1] + 1
@@ -49,13 +115,16 @@ let quickSort = (array) => {
         }
     }
 
-    result1.push(array[0])
+    // result1.push(array[0])
 
     // 错误思维 这样会导致堆栈溢出
     // return quickSort(result1.concat(result2)) 
 
     // 这样正确的
-    return quickSort(result1).concat(quickSort(result2))
+    // return quickSort(result1).concat(quickSort(result2))
+
+    // 修正完美的
+    return quickSort(result1).concat(array[0], result2)
 }
 
 // 数据结构, 深度广度的遍历
@@ -103,6 +172,26 @@ let depth = (node, nodeList = []) => {
     return nodeList
 }
 
+// 栈思想
+let depthFunc = (node) => {
+    let stack = [];
+    let result = [];
+
+    if(node) {
+        stack.push(node)
+        while(stack.length > 0) {
+            let item = stack.pop();
+            result.push(item)
+    
+            while(item?.children?.length) {
+                stack.push(item.children.pop())
+            }
+        }
+    }
+
+    return result
+}
+
 // 广度优先算法(死记的，一定要每天复习)
 let breadth = (node) => {
     let stack = []
@@ -124,6 +213,24 @@ let breadth = (node) => {
     }
 
     return nodeList
+}
+
+// 队列思想
+let dfsFunc = (node) => {
+    let queue = [];
+    let result = [];
+
+    if(node) {
+        queue.push(node)
+        while(queue.length) {
+            let item = queue.shift()
+            result.push(item)
+
+            item.children.forEach((child) => {
+                queue.push(child)
+            })
+        }
+    }
 }
 
 // 接雨水问题，双指针 有点困难，需要反复记忆
@@ -232,7 +339,7 @@ const cellDivid = (n) => {
     return 4
    }
 
-   // 错误思维，n - 3里有1个死细胞
+// 错误思维，n - 3里有1个死细胞
 //    if(n >= 3) {
 //     return 2 * cellDivid(n - 1) - cellDivid(n - 3)
 //    }
@@ -246,5 +353,55 @@ const cellDivid = (n) => {
    }
 }
 
+// 1. 问题，如何判断对象根节点并且插入
+// 2. 如何根据根节点来进行子子节点的插入, 父母不明?
+// 测试用例: 
+// const list = [
+//     { id: 04, pid: 03 },
+//     { id: 01, pid: null },
+//     { id: 02, pid: null },
+//     { id: 03, pid: 01 },
+//     { id: 05, pid: 01 },
+//     { id: 06, pid: 03 },
+//     { id: 07, pid: 02 },
+//     { id: 09, pid: 02 },
+//     { id: 10, pid: 07 },
+// ]
+const toTree = (array) => {
+    let obj = {}
+    let result = []
+    // array.map(item => {
+    //     // 插入根节点
+    //     if(!item?.pid) {
+    //         obj[item?.id] = { ...item, children: [] }
+    //     }
+    // })
 
-export default lcs;
+    array.map(item => {
+        obj[item?.id] = { ...item, children: obj[item?.id]?.children || [] }
+        // 找不到父节点2种情况，一种根节点未插入，一种不存在根节点
+        if(obj[item?.pid]) {
+            let parent = obj[item?.pid]
+            parent.children.push(obj[item?.id])
+            // obj[item?.pid].children = parent.children
+        } else {
+            if(!item?.pid) {
+                result.push({ ...obj[item?.id] })
+            }
+        }
+        // if(item?.pid) {
+        //     let parent = obj[item?.pid]
+        //     parent.children.push(item)
+        //     obj[item?.pid].children = parent.children
+        // } else {
+        //     obj[item?.id] = { ...item, children: [] }
+        // }
+    })
+
+    return result
+}
+
+
+
+
+export { lcs, quickSort, depth, breadth, rain, minWindow, cellDivid, toTree };

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import './App.css';
 import VideoPlayer from './component/videoPlayer';
-import lcs from './component/LCS';
+
+// 测试Treeshaking
+import { lcs } from './component/algorithmProblem';
 
 function App() {
-
   useEffect(() => {
     console.log(lcs('ABCDAB', 'BDCABA'))
   }, [])
